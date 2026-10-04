@@ -18,12 +18,14 @@ El dataset, los checkpoints y los `.onnx` viven en la carpeta compartida de Goog
 
 ## Primeros pasos
 
-1. Clonar el repo (o abrir `notebooks/00_setup.ipynb` en Colab).
-2. Instalar PyTorch desde pytorch.org y luego `pip install -r requirements.txt`.
-3. Editar solo la celda de configuración de `00_setup.ipynb` y ejecutarlo completo.
+1. **Drive (una vez):** en *Compartidos conmigo*, clic derecho en `ProyectoIA_ComandosDeVoz` → *Organizar → Agregar acceso directo* → *Mi unidad*. Así la ruta es la misma para las tres.
+2. **W&B (una vez):** en Colab, icono de llave 🔑 → secreto `WANDB_API_KEY` (clave de https://wandb.ai/authorize) → activar *Acceso al notebook*.
+3. **Escritorio:** clonar el repo, instalar PyTorch desde pytorch.org y luego `pip install -r requirements.txt`. Si Drive no está en `G:\Mi unidad` ni en `G:\My Drive`, definir la variable de entorno `DRIVE_ROOT`.
+4. Abrir `notebooks/00_setup.ipynb` y ejecutarlo completo. No hay que editar nada.
 
 ## Reglas de trabajo con git
 
+- **El código se escribe en VS Code y se sube desde la computadora.** Colab solo baja el código y entrena; no se hace push desde Colab.
 - Trabajar en ramas o en copias personales de los notebooks; los `.ipynb` se fusionan mal.
 - `git pull` antes de `git push`.
 - Todo cambio lo revisa alguien que no lo escribió.
