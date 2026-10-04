@@ -2,18 +2,6 @@
 
 En Windows usar `py` en lugar de `python` si la terminal no lo reconoce.
 
-## Git
-
-```bash
-git clone https://github.com/JennyKing18/IA.git   # primera vez
-git pull                                          # antes de empezar a trabajar
-git checkout -b fase1-preprocesamiento            # rama nueva
-git status                                        # ver qué cambió
-git add -A                                        # preparar todo
-git commit -m "mensaje"                           # guardar
-git push -u origin HEAD                           # subir la rama
-git checkout main                                 # volver a main
-```
 
 ## Python / entorno
 
@@ -40,5 +28,5 @@ from google.colab import drive; drive.mount("/content/drive")   # montar Drive
 !nvidia-smi                                                     # ver la GPU
 ```
 
-Abrir notebook desde GitHub: Archivo → Abrir notebook → GitHub → `JennyKing18/IA`.
+Abrir notebook desde GitHub: Archivo → Abrir notebook → GitHub → `user/IA`.
 GPU: Entorno de ejecución → Cambiar tipo de entorno → T4 GPU.

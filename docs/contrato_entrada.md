@@ -1,8 +1,5 @@
 # Contrato de entrada del modelo (BORRADOR)
 
-> Estado: **propuesta, no acordada**. Las tres personas deben aprobarlo en la Fase 0.
-> La app móvil debe reproducir estos pasos exactamente. Los valores viven en `src/config.py`.
-
 ## Por qué existe este contrato
 
 El modelo no recibe sonido, sino un espectrograma: una imagen que muestra qué frecuencias suenan en cada momento. El modelo aprende a reconocer imágenes construidas de una forma exacta. Si la app construye la imagen de otra forma (otro tamaño, otra escala, otra normalización), el modelo falla en el celular aunque tenga buena exactitud en el notebook. Por eso la receta se fija una vez y no se cambia.
