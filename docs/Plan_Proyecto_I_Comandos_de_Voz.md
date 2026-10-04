@@ -3,9 +3,9 @@
 **Qué se construye:** un sistema que reconoce 10 comandos de voz (yes, no, up, down, left, right, on, off, stop, go). Se entrena con dos modelos de PyTorch, se exporta al formato ONNX y se usa dentro de una aplicación móvil de casa inteligente que funciona con voz y sin internet.
 
 **Personas del equipo:**
-- Persona 1: ____________________
-- Persona 2: ____________________
-- Persona 3: ____________________
+- Persona 1: Jenny
+- Persona 2: Kendall
+- Persona 3: Isaac
 
 ---
 
@@ -26,9 +26,7 @@
 
 **Resultado esperado:** repositorio, herramientas y decisiones iniciales listos, con el contrato de entrada del modelo escrito.
 
-- **Persona 3 (lidera):** hacer una prueba temprana con Expo. Crear una aplicación mínima que cargue un archivo `.onnx` de juguete y ejecute una predicción en un celular real. Se hace al inicio para descubrir problemas a tiempo. Tener en cuenta (verificar en la documentación actual):
-  - La librería `onnxruntime-react-native` no funciona con Expo Go; hace falta una versión de desarrollo compilada (development build).
-  - Compilar para iPhone desde Windows o Linux requiere el servicio de compilación en la nube de Expo y una cuenta de Apple. Si nadie tiene Mac, Android es la ruta más sencilla.
+
   - Los módulos de audio de Expo graban a archivo y no entregan el sonido en bruto en tiempo real; probablemente se necesite un módulo adicional de transmisión de audio.
 - **Persona 1:** crear el repositorio compartido y el notebook con secciones ordenadas. Subir el dataset Speech Commands v0.02 a Google Drive para usarlo en Google Colab. Enviar al profesor estas preguntas: (1) si se puede usar Expo con React Native, (2) si se puede agregar una clase extra de "silencio o palabra desconocida", (3) si los cambios a LeNet-5 más allá de tamaño de entrada, canales e hiperparámetros necesitan aprobación, (4) si el espectrograma puede ir dentro del modelo exportado, (5) cuál es la fecha de entrega.
 - **Persona 2:** crear el proyecto en Weights and Biases (la herramienta de seguimiento de entrenamientos) e invitar al equipo. Proponer la métrica de selección del mejor modelo, por ejemplo puntaje F1 promedio en validación, con tamaño y velocidad como criterio de desempate.
@@ -84,6 +82,7 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 - **Persona 3:** evaluar en el conjunto de prueba los mejores Modelos B (una sola vez cada uno), con matrices de confusión y puntaje F1 por comando. Medir tamaño del archivo y tiempo de predicción de los candidatos.
 - **Todas:** juntas interpretan los resultados: qué comandos se confunden más y por qué. Sesión de explicación al final.
 
+(DEADLINE: 09 OCT 2024)
 ---
 
 # Fase 5: Exportación a ONNX

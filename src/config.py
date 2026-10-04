@@ -7,9 +7,6 @@ reflejarse también en la app móvil.
 import os
 import random
 
-import numpy as np
-import torch
-
 COMMANDS = ["yes", "no", "up", "down", "left", "right", "on", "off", "stop", "go"]
 LABEL_TO_IDX = {c: i for i, c in enumerate(COMMANDS)}
 
@@ -30,6 +27,10 @@ SEED = 42
 
 def set_seed(seed: int = SEED) -> None:
     """Fija todas las semillas para que los resultados sean reproducibles."""
+    # Importados aquí para que COMMANDS y las constantes se puedan usar sin torch instalado.
+    import numpy as np
+    import torch
+
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
