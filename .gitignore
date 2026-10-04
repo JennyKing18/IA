@@ -1,0 +1,42 @@
+# Datos y artefactos pesados (viven en Google Drive, no en git)
+data/
+speech_commands_v0.02/
+checkpoints/
+exports/
+*.pt
+*.pth
+*.onnx
+*.wav
+*.npy
+*.npz
+
+# Seguimiento
+wandb/
+
+# Secretos
+.env
+*.token
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# App móvil
+app/node_modules/
+app/.expo/
+app/android/
+app/ios/
+
+# LaTeX
+informe/*.aux
+informe/*.log
+informe/*.out
+informe/*.synctex.gz
+
+# SO / editores
+.DS_Store
+Thumbs.db
+.vscode/

@@ -1,0 +1,10 @@
+# Instalar PyTorch primero desde https://pytorch.org (elige CPU o CUDA según tu máquina).
+# En Google Colab torch y torchaudio ya vienen instalados.
+torchaudio
+wandb
+onnx
+onnxruntime
+scikit-learn
+matplotlib
+pandas
+jupyter
