@@ -1,4 +1,4 @@
-# Contrato de entrada del modelo (BORRADOR)
+# Contrato de entrada del modelo (DEFINITIVO)
 
 ## Por qué existe este contrato
 
@@ -17,7 +17,7 @@ El modelo no recibe sonido, sino un espectrograma: una imagen que muestra qué f
 | Espectro | Potencia (`|STFT|^2`), `center=True`, relleno reflect | Confirmar que TypeScript replica el relleno |
 | Banco mel | 40 bandas, 20–8000 Hz, escala HTK, sin normalización | |
 | Logaritmo | `log(mel + 1e-6)` | |
-| Normalización final | Por definir: media/desv. global del train o por ejemplo | Si es global, guardar los valores en el contrato |
+| Normalización final | Ninguna | El modelo recibe directamente el log-mel calculado en el paso anterior |
 | Forma del tensor | `[1, 1, 40, 101]` float32 (batch, canal, mel, frames) | 101 = 1 + 16000/160 con `center=True` |
 | Salida | `[1, 10]` logits en el orden de `COMMANDS` | yes, no, up, down, left, right, on, off, stop, go |
 
@@ -44,13 +44,12 @@ El modelo no recibe sonido, sino un espectrograma: una imagen que muestra qué f
 ## Qué está fijo y qué es elección del equipo
 
 - **Fijado por el dataset:** 16 kHz, mono, 1 segundo.
-- **Elección del equipo (valores estándar, pero podrían ser otros):** 30 ms de ventana, 40 bandas, normalización final. Lo importante es decidirlos una vez, justificarlos y no cambiarlos después.
+- **Elección del equipo (valores estándar, pero podrían ser otros):** 30 ms de ventana, 40 bandas y ausencia de normalización final. Lo importante es decidirlos una vez, justificarlos y no cambiarlos después.
 
 ## Preguntas abiertas
 
 - ¿El espectrograma va dentro del grafo ONNX (simplifica la app) o se reimplementa en TypeScript? Consultar al profesor.
 - ¿Clase extra de silencio/desconocido? Cambiaría la salida a `[1, 11]` o `[1, 12]`.
-- Normalización final: ¿media y desviación global calculadas sobre el conjunto de entrenamiento, o normalización por ejemplo?
 
 ## Referencias
 

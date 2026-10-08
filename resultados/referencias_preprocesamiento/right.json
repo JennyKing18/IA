@@ -1,0 +1,13 @@
+{
+  "command": "right",
+  "source": "C:\\Users\\User\\Downloads\\archive\\right\\00b01445_nohash_0.wav",
+  "shape": [
+    40,
+    101
+  ],
+  "dtype": "float32",
+  "min": -13.815510749816895,
+  "max": 7.683546543121338,
+  "mean": -5.3016157150268555,
+  "std": 4.3199639320373535
+}

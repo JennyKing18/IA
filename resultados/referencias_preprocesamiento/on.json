@@ -1,0 +1,13 @@
+{
+  "command": "on",
+  "source": "C:\\Users\\User\\Downloads\\archive\\on\\004ae714_nohash_0.wav",
+  "shape": [
+    40,
+    101
+  ],
+  "dtype": "float32",
+  "min": -13.815510749816895,
+  "max": 2.7907118797302246,
+  "mean": -6.808577060699463,
+  "std": 2.4971415996551514
+}

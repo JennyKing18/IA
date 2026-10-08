@@ -1,0 +1,13 @@
+{
+  "command": "no",
+  "source": "C:\\Users\\User\\Downloads\\archive\\no\\012c8314_nohash_0.wav",
+  "shape": [
+    40,
+    101
+  ],
+  "dtype": "float32",
+  "min": -11.004366874694824,
+  "max": 4.32986307144165,
+  "mean": -5.638106822967529,
+  "std": 2.4556221961975098
+}

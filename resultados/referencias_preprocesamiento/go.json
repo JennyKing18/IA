@@ -1,0 +1,13 @@
+{
+  "command": "go",
+  "source": "C:\\Users\\User\\Downloads\\archive\\go\\004ae714_nohash_0.wav",
+  "shape": [
+    40,
+    101
+  ],
+  "dtype": "float32",
+  "min": -13.815510749816895,
+  "max": 1.9234285354614258,
+  "mean": -8.124003410339355,
+  "std": 4.05322790145874
+}

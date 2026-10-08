@@ -1,0 +1,13 @@
+{
+  "command": "down",
+  "source": "C:\\Users\\User\\Downloads\\archive\\down\\00176480_nohash_0.wav",
+  "shape": [
+    40,
+    101
+  ],
+  "dtype": "float32",
+  "min": -13.702009201049805,
+  "max": 6.68322229385376,
+  "mean": -6.474609375,
+  "std": 5.0489983558654785
+}

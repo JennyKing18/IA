@@ -1,0 +1,13 @@
+{
+  "command": "off",
+  "source": "C:\\Users\\User\\Downloads\\archive\\off\\00176480_nohash_0.wav",
+  "shape": [
+    40,
+    101
+  ],
+  "dtype": "float32",
+  "min": -13.675618171691895,
+  "max": 7.149662017822266,
+  "mean": -6.495168685913086,
+  "std": 4.595653533935547
+}

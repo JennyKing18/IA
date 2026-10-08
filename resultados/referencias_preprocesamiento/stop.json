@@ -1,0 +1,13 @@
+{
+  "command": "stop",
+  "source": "C:\\Users\\User\\Downloads\\archive\\stop\\004ae714_nohash_0.wav",
+  "shape": [
+    40,
+    101
+  ],
+  "dtype": "float32",
+  "min": -13.815510749816895,
+  "max": 1.596400260925293,
+  "mean": -7.356774806976318,
+  "std": 3.7911202907562256
+}

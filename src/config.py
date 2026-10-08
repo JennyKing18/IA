@@ -1,8 +1,8 @@
 """Constantes compartidas del proyecto.
 
-Los valores de AUDIO son PROVISIONALES hasta que el equipo cierre el contrato
-de entrada (ver docs/contrato_entrada.md). Cualquier cambio aquí debe
-reflejarse también en la app móvil.
+ Los valores de AUDIO siguen el contrato definitivo de entrada
+ (ver docs/contrato_entrada.md). Cualquier cambio aquí debe reflejarse también
+ en la app móvil.
 """
 import os
 import random
@@ -10,7 +10,7 @@ import random
 COMMANDS = ["yes", "no", "up", "down", "left", "right", "on", "off", "stop", "go"]
 LABEL_TO_IDX = {c: i for i, c in enumerate(COMMANDS)}
 
-# --- Contrato de entrada (PROVISIONAL) ---
+# --- Contrato de entrada ---
 SAMPLE_RATE = 16_000   # Hz
 CLIP_SECONDS = 1.0
 NUM_SAMPLES = int(SAMPLE_RATE * CLIP_SECONDS)

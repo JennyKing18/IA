@@ -1,0 +1,34 @@
+{
+  "sample_rate": 16000,
+  "num_samples": 16000,
+  "n_fft": 480,
+  "win_length": 480,
+  "hop_length": 160,
+  "window": "hann",
+  "center": true,
+  "pad_mode": "reflect",
+  "n_mels": 40,
+  "f_min": 20.0,
+  "f_max": 8000.0,
+  "mel_scale": "htk",
+  "log_eps": 1e-06,
+  "normalization": "none",
+  "output_shape": [
+    1,
+    1,
+    40,
+    101
+  ],
+  "commands": [
+    "yes",
+    "no",
+    "up",
+    "down",
+    "left",
+    "right",
+    "on",
+    "off",
+    "stop",
+    "go"
+  ]
+}
