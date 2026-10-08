@@ -39,10 +39,12 @@
 
 **Resultado esperado:** dos conjuntos de datos listos (crudo y aumentado), con tensores de referencia para probar la aplicación.
 
-- **Persona 1 (lidera):** filtrar el dataset a los 10 comandos. Dividir en entrenamiento, validación y prueba con los archivos oficiales `validation_list.txt` y `testing_list.txt` (así un mismo hablante no aparece en dos conjuntos). Revisar el balance de clases. Generar el dataset crudo (audio a espectrograma) con el contrato de entrada.
-- **Persona 2:** implementar la aumentación de datos para audio, como SpecAugment (enmascarar franjas de tiempo y de frecuencia), y opcionalmente ruido de fondo o desplazamiento en el tiempo. Se aplica solo al conjunto de entrenamiento. Escribir la justificación con literatura (artículo de SpecAugment de Park y colaboradores, 2019, y otras fuentes). Generar el dataset aumentado.
-- **Persona 3:** escribir la especificación del preprocesamiento paso a paso, para poder reproducirla en TypeScript. Guardar tensores de referencia: uno o más audios `.wav` con el espectrograma exacto que produce Python.
-- **Todas:** cada una revisa el trabajo de otra (Persona 1 revisa la aumentación, Persona 2 revisa la especificación, Persona 3 revisa la división de datos) y guarda figuras de ejemplo para el informe. Sesión de explicación al final.
+- [x] **Persona 1 (lidera):** filtrar el dataset a los 10 comandos. Dividir en entrenamiento, validación y prueba con los archivos oficiales `validation_list.txt` y `testing_list.txt` (así un mismo hablante no aparece en dos conjuntos). Revisar el balance de clases. Generar el dataset crudo (audio a espectrograma) con el contrato de entrada.
+
+- [ ] **Persona 2:** implementar la aumentación de datos para audio, como SpecAugment (enmascarar franjas de tiempo y de frecuencia), y opcionalmente ruido de fondo o desplazamiento en el tiempo. Se aplica solo al conjunto de entrenamiento. Escribir la justificación con literatura (artículo de SpecAugment de Park y colaboradores, 2019, y otras fuentes). Generar el dataset aumentado.
+- [] **Persona 3:** escribir la especificación del preprocesamiento paso a paso, para poder reproducirla en TypeScript. Guardar tensores de referencia: uno o más audios `.wav` con el espectrograma exacto que produce Python.
+
+  **Todas:** cada una revisa el trabajo de otra (Persona 1 revisa la aumentación, Persona 2 revisa la especificación, Persona 3 revisa la división de datos) y guarda figuras de ejemplo para el informe. Sesión de explicación al final.
 
 ---
 
@@ -51,9 +53,9 @@
 
 **Resultado esperado:** Modelo A y Modelo B implementados con `torch.nn`, con diagramas, justificados y revisados.
 
-- **Persona 2 (lidera):** diseñar el Modelo B, una arquitectura ligera pensada para celular (por ejemplo una versión reducida de MobileNet o ResNet). Justificar profundidad, anchos de bloque, tipo de bloques y activaciones, y cómo afectan la generalización y el costo de cálculo. Implementarlo con función de pérdida, optimizador y rutinas de entrenamiento, validación y prueba.
-- **Persona 1:** implementar el Modelo A, una variante de LeNet-5 adaptada a audio. Justificar cada cambio respecto a la original.
-- **Persona 3:** hacer los diagramas de ambos modelos, contar los parámetros y las operaciones de cálculo, y revisar que todas las capas se puedan exportar a ONNX Runtime Mobile.
+- [ ]  **Persona 2 (lidera):** diseñar el Modelo B, una arquitectura ligera pensada para celular (por ejemplo una versión reducida de MobileNet o ResNet). Justificar profundidad, anchos de bloque, tipo de bloques y activaciones, y cómo afectan la generalización y el costo de cálculo. Implementarlo con función de pérdida, optimizador y rutinas de entrenamiento, validación y prueba.
+- [ ]  **Persona 1:** implementar el Modelo A, una variante de LeNet-5 adaptada a audio. Justificar cada cambio respecto a la original.
+- [ ]  **Persona 3:** hacer los diagramas de ambos modelos, contar los parámetros y las operaciones de cálculo, y revisar que todas las capas se puedan exportar a ONNX Runtime Mobile.
 - **Todas:** cada una explica en voz alta una capa de cada modelo a las otras. Cada persona revisa el código del modelo que no escribió. Sesión de explicación al final.
 
 ---
@@ -65,9 +67,9 @@
 
 Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentados, Modelo B con datos crudos y Modelo B con datos aumentados.
 
-- **Persona 3 (lidera):** armar la tabla compartida de hiperparámetros (tasa de aprendizaje, tamaño de lote, dropout, optimizador, épocas) para que las tres configuraciones sean distintas. Entrenar las 4 combinaciones con la configuración 3. Hacer el análisis cruzado: qué efecto tuvo la aumentación y qué hiperparámetros marcaron más diferencia.
-- **Persona 1:** entrenar las 4 combinaciones con la configuración 1. Analizar curvas de entrenamiento contra validación del Modelo A y explicar si hay sobreajuste (overfitting) o subajuste (underfitting).
-- **Persona 2:** entrenar las 4 combinaciones con la configuración 2. Hacer el mismo análisis para el Modelo B.
+- [ ]  **Persona 3 (lidera):** armar la tabla compartida de hiperparámetros (tasa de aprendizaje, tamaño de lote, dropout, optimizador, épocas) para que las tres configuraciones sean distintas. Entrenar las 4 combinaciones con la configuración 3. Hacer el análisis cruzado: qué efecto tuvo la aumentación y qué hiperparámetros marcaron más diferencia.
+- [ ]  **Persona 1:** entrenar las 4 combinaciones con la configuración 1. Analizar curvas de entrenamiento contra validación del Modelo A y explicar si hay sobreajuste (overfitting) o subajuste (underfitting).
+- [ ]  **Persona 2:** entrenar las 4 combinaciones con la configuración 2. Hacer el mismo análisis para el Modelo B.
 - **Todas:** juntas eligen el mejor de cada combinación mirando Weights and Biases. Cada persona explica las curvas de un modelo que no entrenó. Sesión de explicación al final.
 
 ---
@@ -77,9 +79,9 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 
 **Resultado esperado:** resultados en el conjunto de prueba, comparación completa y modelo final elegido con la métrica acordada.
 
-- **Persona 1 (lidera):** hacer la comparación de los 12 modelos en Weights and Biases y armar la tabla de resultados. Elegir el modelo final aplicando la métrica acordada.
-- **Persona 2:** evaluar en el conjunto de prueba los mejores Modelos A (una sola vez cada uno). Generar matrices de confusión y puntaje F1 por comando.
-- **Persona 3:** evaluar en el conjunto de prueba los mejores Modelos B (una sola vez cada uno), con matrices de confusión y puntaje F1 por comando. Medir tamaño del archivo y tiempo de predicción de los candidatos.
+- [ ]  **Persona 1 (lidera):** hacer la comparación de los 12 modelos en Weights and Biases y armar la tabla de resultados. Elegir el modelo final aplicando la métrica acordada.
+- [ ]  **Persona 2:** evaluar en el conjunto de prueba los mejores Modelos A (una sola vez cada uno). Generar matrices de confusión y puntaje F1 por comando.
+- [ ]  **Persona 3:** evaluar en el conjunto de prueba los mejores Modelos B (una sola vez cada uno), con matrices de confusión y puntaje F1 por comando. Medir tamaño del archivo y tiempo de predicción de los candidatos.
 - **Todas:** juntas interpretan los resultados: qué comandos se confunden más y por qué. Sesión de explicación al final.
 
 (DEADLINE: 09 OCT 2024)
@@ -90,9 +92,9 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 
 **Resultado esperado:** archivo `.onnx` del modelo final, validado contra PyTorch, con el contrato de entrada documentado.
 
-- **Persona 2 (lidera):** fijar los pesos entrenados, poner el modelo en modo de inferencia, exportar el archivo `.onnx` y anotar la versión de opset y la configuración usada.
-- **Persona 1:** validar la exportación de forma independiente: cargar el `.onnx` en Python con ONNX Runtime y comparar sus predicciones contra las del modelo original con ejemplos de prueba. Deben coincidir numéricamente.
-- **Persona 3:** documentar el contrato de entrada final (formato del audio, frecuencia de muestreo, preprocesamiento, forma exacta del tensor) y verificar que nombres, formas y tipos de entradas y salidas coinciden con el modelo original.
+- [ ]  **Persona 2 (lidera):** fijar los pesos entrenados, poner el modelo en modo de inferencia, exportar el archivo `.onnx` y anotar la versión de opset y la configuración usada.
+- [ ]  **Persona 1:** validar la exportación de forma independiente: cargar el `.onnx` en Python con ONNX Runtime y comparar sus predicciones contra las del modelo original con ejemplos de prueba. Deben coincidir numéricamente.
+- [ ]  **Persona 3:** documentar el contrato de entrada final (formato del audio, frecuencia de muestreo, preprocesamiento, forma exacta del tensor) y verificar que nombres, formas y tipos de entradas y salidas coinciden con el modelo original.
 - **Todas:** cada una repite la validación en su propia computadora. Sesión de explicación al final.
 
 ---
@@ -108,9 +110,9 @@ Las cuatro pantallas y sus comandos:
 - Rutinas: up y down mueven; go inicia; stop detiene.
 - Confirmación: yes ejecuta la acción; no la cancela.
 
-- **Persona 3 (lidera):** capturar audio del micrófono en ventanas de 1 segundo, integrar ONNX Runtime Mobile (cargar el `.onnx` como recurso de la aplicación y leer la predicción) y configurar la versión de desarrollo compilada.
-- **Persona 1:** portar el espectrograma a TypeScript (transformada de Fourier, filtros mel y normalización) y probarlo hasta que coincida con los tensores de referencia de la Fase 1. Construir las pantallas Panel principal y Dispositivo.
-- **Persona 2:** construir las pantallas Rutinas y Confirmación, y la lógica que conecta cada predicción con una acción. Evitar disparos falsos: ignorar predicciones con poca confianza y no repetir el mismo comando dos veces seguidas por error.
+- [ ]  **Persona 3 (lidera):** capturar audio del micrófono en ventanas de 1 segundo, integrar ONNX Runtime Mobile (cargar el `.onnx` como recurso de la aplicación y leer la predicción) y configurar la versión de desarrollo compilada.
+- [ ]  **Persona 1:** portar el espectrograma a TypeScript (transformada de Fourier, filtros mel y normalización) y probarlo hasta que coincida con los tensores de referencia de la Fase 1. Construir las pantallas Panel principal y Dispositivo.
+- [ ]  **Persona 2:** construir las pantallas Rutinas y Confirmación, y la lógica que conecta cada predicción con una acción. Evitar disparos falsos: ignorar predicciones con poca confianza y no repetir el mismo comando dos veces seguidas por error.
 - **Todas:** trabajan juntas en una sesión de integración (compartiendo pantalla) y rotan quién escribe el código. Cada persona corre la aplicación en su propio celular y prueba los cuatro flujos hablando. Sesión de explicación al final.
 
 ---
@@ -121,9 +123,9 @@ Las cuatro pantallas y sus comandos:
 **Resultado esperado:** informe en LaTeX con la plantilla de IEEE, notebook ordenado, código de la aplicación y archivo comprimido final.
 
 Cada persona escribe las secciones de fases que **no** lideró:
-- **Persona 1 escribe:** exportación a ONNX (Fase 5), entrenamiento (Fase 3) y arquitectura del Modelo B (Fase 2).
-- **Persona 2 escribe:** datos y preprocesamiento (Fase 1), evaluación y selección (Fase 4) y aplicación móvil (Fase 6).
-- **Persona 3 escribe:** aumentación y su justificación con literatura (Fase 1), arquitectura del Modelo A (Fase 2) y la introducción y las conclusiones.
+- [ ]  **Persona 1 escribe:** exportación a ONNX (Fase 5), entrenamiento (Fase 3) y arquitectura del Modelo B (Fase 2).
+- [ ]  **Persona 2 escribe:** datos y preprocesamiento (Fase 1), evaluación y selección (Fase 4) y aplicación móvil (Fase 6).
+- [ ]  **Persona 3 escribe:** aumentación y su justificación con literatura (Fase 1), arquitectura del Modelo A (Fase 2) y la introducción y las conclusiones.
 
 Luego:
 - **Revisión cruzada:** quien lideró cada fase revisa que lo escrito sobre ella sea correcto.
