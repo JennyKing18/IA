@@ -41,7 +41,7 @@
 
 - [x] **Persona 1 (lidera):** filtrar el dataset a los 10 comandos. Dividir en entrenamiento, validación y prueba con los archivos oficiales `validation_list.txt` y `testing_list.txt` (así un mismo hablante no aparece en dos conjuntos). Revisar el balance de clases. Generar el dataset crudo (audio a espectrograma) con el contrato de entrada.
 
-- [ ] **Persona 2:** implementar la aumentación de datos para audio, como SpecAugment (enmascarar franjas de tiempo y de frecuencia), y opcionalmente ruido de fondo o desplazamiento en el tiempo. Se aplica solo al conjunto de entrenamiento. Escribir la justificación con literatura (artículo de SpecAugment de Park y colaboradores, 2019, y otras fuentes). Generar el dataset aumentado.
+- [x] **Persona 2:** implementar la aumentación de datos para audio, como SpecAugment (enmascarar franjas de tiempo y de frecuencia), y opcionalmente ruido de fondo o desplazamiento en el tiempo. Se aplica solo al conjunto de entrenamiento. Escribir la justificación con literatura (artículo de SpecAugment de Park y colaboradores, 2019, y otras fuentes). Generar el dataset aumentado.
 - [] **Persona 3:** escribir la especificación del preprocesamiento paso a paso, para poder reproducirla en TypeScript. Guardar tensores de referencia: uno o más audios `.wav` con el espectrograma exacto que produce Python.
 
   **Todas:** cada una revisa el trabajo de otra (Persona 1 revisa la aumentación, Persona 2 revisa la especificación, Persona 3 revisa la división de datos) y guarda figuras de ejemplo para el informe. Sesión de explicación al final.
