@@ -59,7 +59,7 @@
 
 - [x] **Persona 2 (lidera):** diseñar el Modelo B, una arquitectura ligera pensada para celular (por ejemplo una versión reducida de MobileNet o ResNet). Justificar profundidad, anchos de bloque, tipo de bloques y activaciones, y cómo afectan la generalización y el costo de cálculo. Implementarlo con función de pérdida, optimizador y rutinas de entrenamiento, validación y prueba.
 
-- [ ] **Persona 1:** implementar el Modelo A, una variante de LeNet-5 adaptada a audio. Justificar cada cambio respecto a la original.
+- [x] **Persona 1:** implementar el Modelo A, una variante de LeNet-5 adaptada a audio. Justificar cada cambio respecto a la original.
 
 - [ ] **Persona 3:** hacer los diagramas de ambos modelos, contar los parámetros y las operaciones de cálculo, y revisar que todas las capas se puedan exportar a ONNX Runtime Mobile.
 
