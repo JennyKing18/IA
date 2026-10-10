@@ -17,7 +17,7 @@ El modelo no recibe sonido, sino un espectrograma: una imagen que muestra qué f
 | Espectro | Potencia (`|STFT|^2`), `center=True`, relleno reflect | Confirmar que TypeScript replica el relleno |
 | Banco mel | 40 bandas, 20–8000 Hz, escala HTK, sin normalización | |
 | Logaritmo | `log(mel + 1e-6)` | |
-| Normalización final | Por definir: media/desv. global del train o por ejemplo | Si es global, guardar los valores en el contrato |
+| Normalización final | `(x - MEDIA) / DESV` con `MEDIA = -6.5107` y `DESV = 4.8010` (globales, calculadas solo con el train crudo) | Se aplica dentro del modelo como primera operación: viaja en el `.onnx` y la app NO la reimplementa. La app entrega el log-mel sin normalizar |
 | Forma del tensor | `[1, 1, 40, 101]` float32 (batch, canal, mel, frames) | 101 = 1 + 16000/160 con `center=True` |
 | Salida | `[1, 10]` logits en el orden de `COMMANDS` | yes, no, up, down, left, right, on, off, stop, go |
 
@@ -35,6 +35,8 @@ El modelo no recibe sonido, sino un espectrograma: una imagen que muestra qué f
 
 **Logaritmo.** La percepción del volumen es aproximadamente logarítmica. Además, la energía del espectro varía en varios órdenes de magnitud: sin logaritmo, los sonidos fuertes dominarían la imagen y los débiles serían casi invisibles para la red. El término `1e-6` evita calcular `log(0)` en tramos en silencio. El log-mel es también la entrada sobre la que se define SpecAugment [5], la técnica de aumentación elegida, de modo que el contrato y la aumentación son compatibles.
 
+**Normalización final.** Se estandariza con una media y una desviación globales, calculadas una sola vez con el conjunto de entrenamiento crudo (30 769 espectrogramas de 40 × 101) y usadas igual para el dataset crudo y el aumentado, para que la comparación sea justa. No se calculan por ejemplo para que el resultado no dependa de la duración ni del volumen de cada clip, y para que el modelo exportado se comporte igual en el notebook y en el celular. Las constantes están en el modelo como *buffers* de PyTorch, así que quedan dentro del archivo `.onnx`.
+
 **40 bandas mel.** Es el número de bandas que usan trabajos de detección de palabras clave pensados para dispositivos con recursos limitados [2]. Da suficiente resolución para distinguir 10 comandos y mantiene la imagen pequeña, lo que reduce el cálculo y la latencia en el celular. La alternativa común es 64 bandas: más detalle a cambio de una entrada más grande.
 
 **Forma del tensor `[1, 1, 40, 101]`.** Es consecuencia directa de los valores anteriores: un ejemplo por lote, un canal (como una imagen en escala de grises), 40 bandas y 101 columnas de tiempo (16 000 / 160 = 100 saltos, más uno por el relleno de `center=True`). Una entrada de 40 × 101 es de un orden de magnitud cercano a la entrada de 32 × 32 para la que se diseñó LeNet-5 [6], así que el Modelo A requiere pocos cambios respecto a la arquitectura original.
@@ -50,7 +52,7 @@ El modelo no recibe sonido, sino un espectrograma: una imagen que muestra qué f
 
 - ¿El espectrograma va dentro del grafo ONNX (simplifica la app) o se reimplementa en TypeScript? Consultar al profesor.
 - ¿Clase extra de silencio/desconocido? Cambiaría la salida a `[1, 11]` o `[1, 12]`.
-- Normalización final: ¿media y desviación global calculadas sobre el conjunto de entrenamiento, o normalización por ejemplo?
+- ~~Normalización final~~ (resuelta): media y desviación global del entrenamiento crudo, valores en la tabla.
 
 ## Referencias
 
