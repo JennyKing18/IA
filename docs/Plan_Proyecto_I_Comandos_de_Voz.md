@@ -45,7 +45,7 @@
 
 - [x] **Persona 2:** implementar la aumentación de datos para audio, como SpecAugment (enmascarar franjas de tiempo y de frecuencia), y opcionalmente ruido de fondo o desplazamiento en el tiempo. Se aplica solo al conjunto de entrenamiento. Escribir la justificación con literatura (artículo de SpecAugment de Park y colaboradores, 2019, y otras fuentes). Generar el dataset aumentado.
 
-- \[\] **Persona 3:** escribir la especificación del preprocesamiento paso a paso, para poder reproducirla en TypeScript. Guardar tensores de referencia: uno o más audios `.wav` con el espectrograma exacto que produce Python.
+- [x] **Persona 3:** escribir la especificación del preprocesamiento paso a paso, para poder reproducirla en TypeScript. Guardar tensores de referencia: uno o más audios `.wav` con el espectrograma exacto que produce Python.
 
   **Todas:** cada una revisa el trabajo de otra (Persona 1 revisa la aumentación, Persona 2 revisa la especificación, Persona 3 revisa la división de datos) y guarda figuras de ejemplo para el informe. Sesión de explicación al final.
 
@@ -61,7 +61,7 @@
 
 - [x] **Persona 1:** implementar el Modelo A, una variante de LeNet-5 adaptada a audio. Justificar cada cambio respecto a la original.
 
-- [ ] **Persona 3:** hacer los diagramas de ambos modelos, contar los parámetros y las operaciones de cálculo, y revisar que todas las capas se puedan exportar a ONNX Runtime Mobile.
+- [x] **Persona 3:** hacer los diagramas de ambos modelos, contar los parámetros y las operaciones de cálculo, y revisar que todas las capas se puedan exportar a ONNX Runtime Mobile.
 
 - **Todas:** cada una explica en voz alta una capa de cada modelo a las otras. Cada persona revisa el código del modelo que no escribió. Sesión de explicación al final.
 

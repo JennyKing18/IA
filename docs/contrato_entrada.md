@@ -46,7 +46,7 @@ El modelo no recibe sonido, sino un espectrograma: una imagen que muestra qué f
 ## Qué está fijo y qué es elección del equipo
 
 - **Fijado por el dataset:** 16 kHz, mono, 1 segundo.
-- **Elección del equipo (valores estándar, pero podrían ser otros):** 30 ms de ventana, 40 bandas y ausencia de normalización final. Lo importante es decidirlos una vez, justificarlos y no cambiarlos después.
+- **Elección del equipo (valores estándar, pero podrían ser otros):** 30 ms de ventana, 40 bandas y estandarización global dentro del modelo. Lo importante es decidirlos una vez, justificarlos y no cambiarlos después.
 
 ## Preguntas abiertas
 

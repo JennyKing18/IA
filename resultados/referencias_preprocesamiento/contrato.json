@@ -12,7 +12,9 @@
   "f_max": 8000.0,
   "mel_scale": "htk",
   "log_eps": 1e-06,
-  "normalization": "none",
+  "normalization": "inside_model",
+  "normalization_mean": -6.5107,
+  "normalization_std": 4.801,
   "output_shape": [
     1,
     1,

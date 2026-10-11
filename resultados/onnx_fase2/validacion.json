@@ -1,0 +1,64 @@
+[
+  {
+    "model": "modelo_a",
+    "file": "resultados\\onnx_fase2\\modelo_a.onnx",
+    "opset": 17,
+    "input_name": "input",
+    "input_shape": [
+      1,
+      1,
+      40,
+      101
+    ],
+    "output_name": "logits",
+    "output_shape": [
+      1,
+      10
+    ],
+    "expected_input_shape": [
+      1,
+      1,
+      40,
+      101
+    ],
+    "expected_output_shape": [
+      1,
+      10
+    ],
+    "max_abs_diff": 1.1548399925231934e-07,
+    "mean_abs_diff": 4.582107138162428e-08,
+    "file_size_bytes": 1240212,
+    "valid": true
+  },
+  {
+    "model": "modelo_b",
+    "file": "resultados\\onnx_fase2\\modelo_b.onnx",
+    "opset": 17,
+    "input_name": "input",
+    "input_shape": [
+      1,
+      1,
+      40,
+      101
+    ],
+    "output_name": "logits",
+    "output_shape": [
+      1,
+      10
+    ],
+    "expected_input_shape": [
+      1,
+      1,
+      40,
+      101
+    ],
+    "expected_output_shape": [
+      1,
+      10
+    ],
+    "max_abs_diff": 1.0913936421275139e-11,
+    "mean_abs_diff": 4.411049216862528e-12,
+    "file_size_bytes": 208068,
+    "valid": true
+  }
+]
