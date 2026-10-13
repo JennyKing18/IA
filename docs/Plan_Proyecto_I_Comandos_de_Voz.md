@@ -79,7 +79,7 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 
 - [x] **Persona 1:** entrenar las 4 combinaciones con la configuración 1. Analizar curvas de entrenamiento contra validación del Modelo A y explicar si hay sobreajuste (overfitting) o subajuste (underfitting).
 
-- [ ] **Persona 2:** entrenar las 4 combinaciones con la configuración 2. Hacer el mismo análisis para el Modelo B.
+- [x] **Persona 2:** entrenar las 4 combinaciones con la configuración 2. Hacer el mismo análisis para el Modelo B.
 
 - **Todas:** juntas eligen el mejor de cada combinación mirando Weights and Biases. Cada persona explica las curvas de un modelo que no entrenó. Sesión de explicación al final.
 
@@ -91,7 +91,7 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 
 **Resultado esperado:** resultados en el conjunto de prueba, comparación completa y modelo final elegido con la métrica acordada.
 
-- [ ] **Persona 1 (lidera):** hacer la comparación de los 12 modelos en Weights and Biases y armar la tabla de resultados. Elegir el modelo final aplicando la métrica acordada.
+- [x] **Persona 1 (lidera):** hacer la comparación de los 12 modelos en Weights and Biases y armar la tabla de resultados. Elegir el modelo final aplicando la métrica acordada.
 
 - [ ] **Persona 2:** evaluar en el conjunto de prueba los mejores Modelos A (una sola vez cada uno). Generar matrices de confusión y puntaje F1 por comando.
 
