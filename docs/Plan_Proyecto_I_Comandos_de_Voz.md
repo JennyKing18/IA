@@ -75,9 +75,9 @@
 
 Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentados, Modelo B con datos crudos y Modelo B con datos aumentados.
 
-- [ ] **Persona 3 (lidera):** armar la tabla compartida de hiperparámetros (tasa de aprendizaje, tamaño de lote, dropout, optimizador, épocas) para que las tres configuraciones sean distintas. Entrenar las 4 combinaciones con la configuración 3. Hacer el análisis cruzado: qué efecto tuvo la aumentación y qué hiperparámetros marcaron más diferencia.
+- [x] **Persona 3 (lidera):** armar la tabla compartida de hiperparámetros (tasa de aprendizaje, tamaño de lote, dropout, optimizador, épocas) para que las tres configuraciones sean distintas. Entrenar las 4 combinaciones con la configuración 3. Hacer el análisis cruzado: qué efecto tuvo la aumentación y qué hiperparámetros marcaron más diferencia.
 
-- [ ] **Persona 1:** entrenar las 4 combinaciones con la configuración 1. Analizar curvas de entrenamiento contra validación del Modelo A y explicar si hay sobreajuste (overfitting) o subajuste (underfitting).
+- [x] **Persona 1:** entrenar las 4 combinaciones con la configuración 1. Analizar curvas de entrenamiento contra validación del Modelo A y explicar si hay sobreajuste (overfitting) o subajuste (underfitting).
 
 - [ ] **Persona 2:** entrenar las 4 combinaciones con la configuración 2. Hacer el mismo análisis para el Modelo B.
 
