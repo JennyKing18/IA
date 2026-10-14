@@ -107,11 +107,11 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 
 **Resultado esperado:** archivo `.onnx` del modelo final, validado contra PyTorch, con el contrato de entrada documentado.
 
-- [ ] **Persona 2 (lidera):** fijar los pesos entrenados, poner el modelo en modo de inferencia, exportar el archivo `.onnx` y anotar la versión de opset y la configuración usada.
+- [x] **Persona 2 (lidera):** fijar los pesos entrenados, poner el modelo en modo de inferencia, exportar el archivo `.onnx` y anotar la versión de opset y la configuración usada.
 
-- [ ] **Persona 1:** validar la exportación de forma independiente: cargar el `.onnx` en Python con ONNX Runtime y comparar sus predicciones contra las del modelo original con ejemplos de prueba. Deben coincidir numéricamente.
+- [x] **Persona 1:** validar la exportación de forma independiente: cargar el `.onnx` en Python con ONNX Runtime y comparar sus predicciones contra las del modelo original con ejemplos de prueba. Deben coincidir numéricamente.
 
-- [ ] **Persona 3:** documentar el contrato de entrada final (formato del audio, frecuencia de muestreo, preprocesamiento, forma exacta del tensor) y verificar que nombres, formas y tipos de entradas y salidas coinciden con el modelo original.
+- [x] **Persona 3:** documentar el contrato de entrada final (formato del audio, frecuencia de muestreo, preprocesamiento, forma exacta del tensor) y verificar que nombres, formas y tipos de entradas y salidas coinciden con el modelo original.
 
 - **Todas:** cada una repite la validación en su propia computadora. Sesión de explicación al final.
 

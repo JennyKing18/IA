@@ -1,0 +1,37 @@
+{
+  "onnx_sha256": "655f887f6e2e563756df879eea9d1fd6a67965e6151cca6e8b5613a12e33a8e2",
+  "onnxruntime": "1.31.0",
+  "torch": "2.14.1+cpu",
+  "pruebas": [
+    {
+      "prueba": "test (4 074 audios)",
+      "ejemplos": 4074,
+      "dif_max_logits": 3.0517578125e-05,
+      "dif_media_logits": 3.4755016713461373e-06,
+      "predicciones_iguales": 1.0
+    },
+    {
+      "prueba": "silencio",
+      "ejemplos": 1,
+      "dif_max_logits": 9.5367431640625e-07,
+      "dif_media_logits": 4.678964558024745e-07,
+      "predicciones_iguales": 1.0
+    },
+    {
+      "prueba": "ruido (200)",
+      "ejemplos": 200,
+      "dif_max_logits": 2.002716064453125e-05,
+      "dif_media_logits": 4.215434273646679e-06,
+      "predicciones_iguales": 1.0
+    },
+    {
+      "prueba": "extremos ±30 (200)",
+      "ejemplos": 200,
+      "dif_max_logits": 2.6702880859375e-05,
+      "dif_media_logits": 5.98381438976503e-06,
+      "predicciones_iguales": 1.0
+    }
+  ],
+  "f1_macro_test_pytorch": 0.974180972756481,
+  "f1_macro_test_onnx": 0.974180972756481
+}
