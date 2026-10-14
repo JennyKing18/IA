@@ -1,0 +1,71 @@
+{
+  "corrida": "B_aumentado_config1",
+  "checkpoint": "B_aumentado_config1_best.pt",
+  "mejor_epoca": 32,
+  "f1_macro_val": 0.9706830263489488,
+  "configuracion": {
+    "config": 1,
+    "optimizer": "adam",
+    "lr": 0.001,
+    "batch_size": 64,
+    "weight_decay": 0.0,
+    "epochs": 35,
+    "dropout": 0.2,
+    "seed": 42
+  },
+  "media": -6.510657787322998,
+  "desv": 4.801028728485107,
+  "parametros": 50410,
+  "onnx": {
+    "archivo": "modelo_final.onnx",
+    "opset": 18,
+    "ir_version": 10,
+    "entradas": [
+      [
+        "input",
+        [
+          1,
+          1,
+          40,
+          101
+        ],
+        "FLOAT"
+      ]
+    ],
+    "salidas": [
+      [
+        "logits",
+        [
+          1,
+          10
+        ],
+        "FLOAT"
+      ]
+    ],
+    "bytes": 87619,
+    "sha256": "655f887f6e2e563756df879eea9d1fd6a67965e6151cca6e8b5613a12e33a8e2"
+  },
+  "versiones": {
+    "torch": "2.11.0+cu130",
+    "onnx": "1.23.2",
+    "onnxruntime": "1.31.0"
+  },
+  "validacion_onnx_vs_pytorch": {
+    "ejemplos": 3703,
+    "dif_max_logits": 2.288818359375e-05,
+    "predicciones_iguales": 1.0,
+    "f1_macro_val_onnx": 0.9706830263489488
+  },
+  "orden_salida": [
+    "yes",
+    "no",
+    "up",
+    "down",
+    "left",
+    "right",
+    "on",
+    "off",
+    "stop",
+    "go"
+  ]
+}
