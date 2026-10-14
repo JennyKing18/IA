@@ -93,9 +93,9 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 
 - [x] **Persona 1 (lidera):** hacer la comparación de los 12 modelos en Weights and Biases y armar la tabla de resultados. Elegir el modelo final aplicando la métrica acordada.
 
-- [ ] **Persona 2:** evaluar en el conjunto de prueba los mejores Modelos A (una sola vez cada uno). Generar matrices de confusión y puntaje F1 por comando.
+- [x] **Persona 2:** evaluar en el conjunto de prueba los mejores Modelos A (una sola vez cada uno). Generar matrices de confusión y puntaje F1 por comando.
 
-- [ ] **Persona 3:** evaluar en el conjunto de prueba los mejores Modelos B (una sola vez cada uno), con matrices de confusión y puntaje F1 por comando. Medir tamaño del archivo y tiempo de predicción de los candidatos.
+- [x] **Persona 3:** evaluar en el conjunto de prueba los mejores Modelos B (una sola vez cada uno), con matrices de confusión y puntaje F1 por comando. Medir tamaño del archivo y tiempo de predicción de los candidatos.
 
 - **Todas:** juntas interpretan los resultados: qué comandos se confunden más y por qué. Sesión de explicación al final.
 
@@ -107,11 +107,11 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 
 **Resultado esperado:** archivo `.onnx` del modelo final, validado contra PyTorch, con el contrato de entrada documentado.
 
-- [ ] **Persona 2 (lidera):** fijar los pesos entrenados, poner el modelo en modo de inferencia, exportar el archivo `.onnx` y anotar la versión de opset y la configuración usada.
+- [x] **Persona 2 (lidera):** fijar los pesos entrenados, poner el modelo en modo de inferencia, exportar el archivo `.onnx` y anotar la versión de opset y la configuración usada.
 
-- [ ] **Persona 1:** validar la exportación de forma independiente: cargar el `.onnx` en Python con ONNX Runtime y comparar sus predicciones contra las del modelo original con ejemplos de prueba. Deben coincidir numéricamente.
+- [x] **Persona 1:** validar la exportación de forma independiente: cargar el `.onnx` en Python con ONNX Runtime y comparar sus predicciones contra las del modelo original con ejemplos de prueba. Deben coincidir numéricamente.
 
-- [ ] **Persona 3:** documentar el contrato de entrada final (formato del audio, frecuencia de muestreo, preprocesamiento, forma exacta del tensor) y verificar que nombres, formas y tipos de entradas y salidas coinciden con el modelo original.
+- [x] **Persona 3:** documentar el contrato de entrada final (formato del audio, frecuencia de muestreo, preprocesamiento, forma exacta del tensor) y verificar que nombres, formas y tipos de entradas y salidas coinciden con el modelo original.
 
 - **Todas:** cada una repite la validación en su propia computadora. Sesión de explicación al final.
 

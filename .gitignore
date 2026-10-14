@@ -6,6 +6,7 @@ exports/
 *.pt
 *.pth
 *.onnx
+!models/*.onnx
 *.wav
 *.npy
 *.npz
