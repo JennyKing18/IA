@@ -1,0 +1,31 @@
+diff --git a/node_modules/onnxruntime-react-native/android/build.gradle b/node_modules/onnxruntime-react-native/android/build.gradle
+index 41b4359..ffd9050 100644
+--- a/node_modules/onnxruntime-react-native/android/build.gradle
++++ b/node_modules/onnxruntime-react-native/android/build.gradle
+@@ -247,7 +247,7 @@ dependencies {
+     extractLibs "com.microsoft.onnxruntime:onnxruntime-android:latest.integration@aar"
+   }
+ 
+-  if (VersionNumber.parse(REACT_NATIVE_VERSION) < VersionNumber.parse("0.71")) {
++  if (REACT_NATIVE_MINOR_VERSION < 71) {  // VersionNumber ya no existe en Gradle 9
+     extractLibs "com.facebook.fbjni:fbjni:+:headers"
+     extractLibs "com.facebook.fbjni:fbjni:+"
+   }
+diff --git a/node_modules/onnxruntime-react-native/react-native.config.js b/node_modules/onnxruntime-react-native/react-native.config.js
+new file mode 100644
+index 0000000..9f781f4
+--- /dev/null
++++ b/node_modules/onnxruntime-react-native/react-native.config.js
+@@ -0,0 +1,12 @@
++// Registra el paquete nativo de Android. Sin este archivo, Expo toma unimodule.json como si fuera
++// un módulo de Expo y no enlaza OnnxruntimePackage (mismo arreglo que onnxruntime PR #28266).
++module.exports = {
++  dependency: {
++    platforms: {
++      android: {
++        packageImportPath: 'import ai.onnxruntime.reactnative.OnnxruntimePackage;',
++        packageInstance: 'new OnnxruntimePackage()',
++      },
++    },
++  },
++};

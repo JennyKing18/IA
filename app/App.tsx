@@ -1,9 +1,11 @@
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RecordingPresets, requestRecordingPermissionsAsync, setAudioModeAsync, useAudioRecorder } from 'expo-audio';
 import { StatusBar } from 'expo-status-bar';
 import { createContext, useContext, useState } from 'react';
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+import { useVoiceCommand } from './src/audio/useVoiceCommand';
 
 type DeviceId = 'lights' | 'fan' | 'tv';
 
@@ -41,38 +43,20 @@ function AppShell({ children, title, eyebrow }: { children: React.ReactNode; tit
   );
 }
 
+// Micrófono → log-mel → modelo ONNX en el celular → onCommand (ver src/audio/useVoiceCommand.ts)
 function VoiceControl({ onCommand }: { onCommand: (command: Command) => void }) {
-  const recorder = useAudioRecorder(RecordingPresets.LOW_QUALITY);
-  const [recording, setRecording] = useState(false);
-  const [message, setMessage] = useState('Ready for a command');
-
-  const recordWindow = async () => {
-    if (recording) return;
-    const permission = await requestRecordingPermissionsAsync();
-    if (!permission.granted) {
-      setMessage('Microphone permission required');
-      return;
-    }
-    await setAudioModeAsync({ allowsRecording: true, playsInSilentMode: true });
-    await recorder.prepareToRecordAsync();
-    recorder.record();
-    setRecording(true);
-    setMessage('Listening for 1 second...');
-    setTimeout(async () => {
-      recorder.stop();
-      setRecording(false);
-      setMessage('Audio captured. ONNX inference is next.');
-    }, 1000);
-  };
+  const { state, message, listen } = useVoiceCommand(onCommand);
+  const busy = state === 'listening' || state === 'thinking';
 
   return (
     <View style={styles.voicePanel}>
-      <View>
+      <View style={styles.deviceText}>
         <Text style={styles.panelLabel}>VOICE INPUT</Text>
         <Text style={styles.voiceMessage}>{message}</Text>
       </View>
-      <Pressable style={[styles.micButton, recording && styles.micButtonActive]} onPress={() => void recordWindow()}>
-        <Text style={styles.micIcon}>{recording ? '■' : '●'}</Text>
+      <Pressable style={[styles.micButton, busy && styles.micButtonActive, state === 'loading' && styles.micButtonDisabled]}
+        onPress={() => void listen()} disabled={state !== 'idle'}>
+        <Text style={styles.micIcon}>{state === 'listening' ? '■' : state === 'thinking' ? '…' : '●'}</Text>
       </Pressable>
     </View>
   );
@@ -261,7 +245,7 @@ function QuickCommand({ command, onPress }: { command: Command; onPress?: () => 
 }
 
 export default function App() {
-  return <DevicesProvider><NavigationContainer><Stack.Navigator screenOptions={{ headerShown: false }}><Stack.Screen name="Home" component={HomeScreen} /><Stack.Screen name="Device" component={DeviceScreen} /><Stack.Screen name="Routines" component={RoutinesScreen} /><Stack.Screen name="Confirm" component={ConfirmScreen} /></Stack.Navigator></NavigationContainer></DevicesProvider>;
+  return <SafeAreaProvider><DevicesProvider><NavigationContainer><Stack.Navigator screenOptions={{ headerShown: false }}><Stack.Screen name="Home" component={HomeScreen} /><Stack.Screen name="Device" component={DeviceScreen} /><Stack.Screen name="Routines" component={RoutinesScreen} /><Stack.Screen name="Confirm" component={ConfirmScreen} /></Stack.Navigator></NavigationContainer></DevicesProvider></SafeAreaProvider>;
 }
 
 const styles = StyleSheet.create({
@@ -285,6 +269,7 @@ const styles = StyleSheet.create({
   voiceMessage: { color: '#c8cec8', marginTop: 8, fontSize: 13 },
   micButton: { width: 54, height: 54, borderRadius: 27, backgroundColor: '#d7ff64', alignItems: 'center', justifyContent: 'center' },
   micButtonActive: { backgroundColor: '#ff765f' },
+  micButtonDisabled: { opacity: 0.4 },
   micIcon: { color: '#101312', fontSize: 18 },
   quickRow: { flexDirection: 'row', gap: 10, marginTop: 18 },
   quickCommand: { flex: 1, height: 42, borderRadius: 5, backgroundColor: '#1a201e', alignItems: 'center', justifyContent: 'center' },
