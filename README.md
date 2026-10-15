@@ -2,24 +2,54 @@
 
 Curso de Inteligencia Artificial, Instituto Tecnológico de Costa Rica.
 
-Reconocimiento de 10 comandos (yes, no, up, down, left, right, on, off, stop, go) de Speech Commands v0.02 con dos modelos de PyTorch, exportados a ONNX y usados en la app móvil *Smart Home Voice Navigator*.
-
-## Estructura
+Reconoce 10 comandos de voz (yes, no, up, down, left, right, on, off, stop, go) entrenados con Speech Commands v0.02. Se compararon dos modelos de PyTorch (A: LeNet-5, B: MobileNetV2 reducido) en W&B; el ganador (B, F1 macro 0.974 en test) se exportó a ONNX y corre **dentro del celular** con ONNX Runtime Mobile, en la app *Smart Home Voice Navigator* (Expo / React Native): con la voz se navega entre pantallas y se encienden o apagan dispositivos simulados, sin internet.
 
 | Carpeta | Contenido |
 |---|---|
-| `src/` | Código reutilizable (`config.py`, preprocesamiento, dataset, modelos, entrenamiento). Los notebooks lo importan. |
-| `notebooks/` | Notebooks por fase. `00_setup.ipynb` prepara el entorno. |
-| `docs/` | Plan del proyecto y contrato de entrada del modelo. |
-| `app/` | App móvil (Expo / React Native, pendiente de confirmar). |
-| `informe/` | Fuente LaTeX del informe (plantilla IEEE). |
+| `notebooks/proyecto.ipynb` | Todo el modelo: datos, aumentación, entrenamiento, evaluación y exportación a ONNX |
+| `models/` | Modelo final (`modelo_final.onnx`), validación y referencias para la app |
+| `docs/` | Plan, contrato de entrada (receta exacta del espectrograma) y análisis de resultados |
+| `app/` | App móvil: pantallas, espectrograma en TypeScript (`src/audio/`) y el modelo en `assets/model/` |
 
-El dataset, los checkpoints y los `.onnx` viven en la carpeta compartida de Google Drive `ProyectoIA_ComandosDeVoz`, **no** en git.
+## Requisitos (Windows)
 
-## Primeros pasos
+- [Git](https://git-scm.com/) y [Node.js](https://nodejs.org/) 20 o superior
+- [Android Studio](https://developer.android.com/studio) con un emulador (por ejemplo Pixel 7, API 35, x86_64)
+- JDK 17 o 21 (por ejemplo [Temurin 21](https://adoptium.net/)). **No** el JDK 25 que trae Android Studio: falla al compilar.
 
-1. **Drive (una vez):** en *Compartidos conmigo*, clic derecho en `ProyectoIA_ComandosDeVoz` → *Organizar → Agregar acceso directo* → *Mi unidad*. Así la ruta es la misma para las tres.
-2. **W&B (una vez):** en Colab, icono de llave 🔑 → secreto `WANDB_API_KEY` (clave de https://wandb.ai/authorize) → activar *Acceso al notebook*.
-3. **Escritorio:** clonar el repo, instalar PyTorch desde pytorch.org y luego `pip install -r requirements.txt`. Si Drive no está en `G:\Mi unidad` ni en `G:\My Drive`, definir la variable de entorno `DRIVE_ROOT`.
-4. Abrir `notebooks/00_setup.ipynb` y ejecutarlo completo. No hay que editar nada.
+## 1. Descargar el proyecto
 
+```powershell
+git clone https://github.com/JennyKing18/IA.git
+cd IA\app
+npm install
+```
+
+`npm install` también aplica `app/patches/` (dos arreglos a `onnxruntime-react-native` para Gradle 9 y Expo).
+
+## 2. Configurar Android y Java (en cada terminal nueva de PowerShell)
+
+```powershell
+$env:ANDROID_HOME = "$env:LOCALAPPDATA\Android\Sdk"
+$env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot"   # ajustar a la carpeta de su JDK
+```
+
+## 3. Generar el APK
+
+```powershell
+npx expo prebuild --platform android
+cd android
+.\gradlew.bat assembleRelease
+```
+
+El APK queda en `app\android\app\build\outputs\apk\release\app-release.apk`. Funciona sin computadora ni internet: copiarlo al celular, abrirlo y permitir "instalar apps desconocidas". La primera compilación tarda 15–30 min (descarga el NDK y dependencias).
+
+## Probar en el emulador (desarrollo)
+
+Con el emulador abierto, desde `app\`:
+
+```powershell
+npx expo run:android
+```
+
+Instala la app y recarga al guardar cambios. Después, para volver a abrirla basta `npx expo start --dev-client` (tecla `a`). Para usar el micrófono: en el emulador, **⋯ → Microphone → "Virtual microphone uses host audio input"**; luego tocar el círculo verde y decir un comando en inglés.
