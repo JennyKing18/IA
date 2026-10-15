@@ -13,7 +13,7 @@ type RootStackParamList = {
   Home: undefined;
   Device: { deviceId?: DeviceId } | undefined;
   Routines: undefined;
-  Confirm: { action?: string } | undefined;
+  Confirm: { routineId?: RoutineId } | undefined;
 };
 
 type Command = 'yes' | 'no' | 'up' | 'down' | 'left' | 'right' | 'on' | 'off' | 'go' | 'stop';
@@ -64,7 +64,24 @@ function VoiceControl({ onCommand }: { onCommand: (command: Command) => void }) 
 
 // Estado simulado de los dispositivos, compartido entre el panel principal y la pantalla de dispositivo
 type DeviceInfo = { name: string; detail: string; on: boolean };
-type DevicesState = { devices: Record<DeviceId, DeviceInfo>; setPower: (id: DeviceId, on: boolean) => void };
+type RoutineId = 'study' | 'night' | 'welcome';
+type RoutineInfo = { name: string; detail: string; power: Partial<Record<DeviceId, boolean>>; sensitive?: boolean };
+
+// Cada rutina cambia el estado de los dispositivos. Night Mode apaga todo: pide confirmación (yes / no).
+const ROUTINES: Record<RoutineId, RoutineInfo> = {
+  study: { name: 'Study Mode', detail: 'Lights on, fan on', power: { lights: true, fan: true } },
+  night: { name: 'Night Mode', detail: 'Lights, fan and TV off', power: { lights: false, fan: false, tv: false }, sensitive: true },
+  welcome: { name: 'Welcome Home', detail: 'Lights and TV on', power: { lights: true, tv: true } },
+};
+const ROUTINE_ORDER: RoutineId[] = ['study', 'night', 'welcome'];
+
+type DevicesState = {
+  devices: Record<DeviceId, DeviceInfo>;
+  setPower: (id: DeviceId, on: boolean) => void;
+  activeRoutine: RoutineId | null;
+  startRoutine: (id: RoutineId) => void;
+  stopRoutine: () => void;
+};
 
 const INITIAL_DEVICES: Record<DeviceId, DeviceInfo> = {
   lights: { name: 'Lights', detail: 'Living room and bedroom lights', on: true },
@@ -76,8 +93,20 @@ const DevicesContext = createContext<DevicesState | null>(null);
 
 function DevicesProvider({ children }: { children: React.ReactNode }) {
   const [devices, setDevices] = useState(INITIAL_DEVICES);
+  const [activeRoutine, setActiveRoutine] = useState<RoutineId | null>(null);
   const setPower = (id: DeviceId, on: boolean) => setDevices((prev) => ({ ...prev, [id]: { ...prev[id], on } }));
-  return <DevicesContext.Provider value={{ devices, setPower }}>{children}</DevicesContext.Provider>;
+  const startRoutine = (id: RoutineId) => {
+    setDevices((prev) => {
+      const next = { ...prev };
+      for (const [device, on] of Object.entries(ROUTINES[id].power) as [DeviceId, boolean][]) next[device] = { ...next[device], on };
+      return next;
+    });
+    setActiveRoutine(id);
+  };
+  const stopRoutine = () => setActiveRoutine(null);
+  return (
+    <DevicesContext.Provider value={{ devices, setPower, activeRoutine, startRoutine, stopRoutine }}>{children}</DevicesContext.Provider>
+  );
 }
 
 function useDevices() {
@@ -208,35 +237,89 @@ function ActionCard({ title, detail, focused, onPress }: { title: string; detail
   );
 }
 
+// Rutinas: up/down mueven el foco; go inicia la rutina enfocada (las sensibles pasan por Confirmación);
+// stop detiene la rutina activa; no regresa.
 function RoutinesScreen() {
   const navigation = useNavigation<any>();
+  const { activeRoutine, startRoutine, stopRoutine } = useDevices();
+  const [focus, setFocus] = useState(0);
+  const [lastCommand, setLastCommand] = useState<Command | null>(null);
+
+  const go = (index: number) => {
+    const id = ROUTINE_ORDER[index];
+    if (ROUTINES[id].sensitive) navigation.navigate('Confirm', { routineId: id });
+    else startRoutine(id);
+  };
+
+  const onCommand = (command: Command) => {
+    setLastCommand(command);
+    if (command === 'up' && focus > 0) setFocus(focus - 1);
+    if (command === 'down' && focus < ROUTINE_ORDER.length - 1) setFocus(focus + 1);
+    if (command === 'go') go(focus);
+    if (command === 'stop') stopRoutine();
+    if (command === 'no') navigation.goBack();
+  };
+
   return (
-    <AppShell eyebrow="AUTOMATIONS" title="Your routines">
-      <RoutineCard name="Welcome home" detail="Lights on · 18:30" onPress={() => navigation.navigate('Confirm', { action: 'Welcome home' })} />
-      <RoutineCard name="Movie mode" detail="Lights low · TV on" onPress={() => navigation.navigate('Confirm', { action: 'Movie mode' })} />
-      <RoutineCard name="Good night" detail="Everything off · 23:00" onPress={() => navigation.navigate('Confirm', { action: 'Good night' })} />
-      <VoiceControl onCommand={(command) => { if (command === 'go') navigation.navigate('Confirm', { action: 'Welcome home' }); if (command === 'stop') navigation.goBack(); }} />
-      <View style={styles.quickRow}><QuickCommand command="go" /><QuickCommand command="stop" /></View>
-      <Text style={styles.hint}>Use GO to start the selected routine or STOP to leave.</Text>
+    <AppShell eyebrow="AUTOMATIONS" title="Routines">
+      <Text style={styles.subtitle}>Listening: go / stop / up / down</Text>
+      {ROUTINE_ORDER.map((id, index) => {
+        const running = activeRoutine === id;
+        return (
+          <Pressable key={id} style={[styles.routineCard, focus === index && styles.focused]} onPress={() => { setFocus(index); go(index); }}>
+            <View style={styles.deviceText}><Text style={styles.cardTitle}>{ROUTINES[id].name}</Text><Text style={styles.cardDetail}>{ROUTINES[id].detail}</Text></View>
+            <View style={[styles.badge, styles.routineBadge, running ? styles.powerOn : styles.powerOff]}>
+              <Text style={[styles.powerText, !running && styles.badgeTextOff]}>{running ? 'RUNNING' : 'GO'}</Text>
+            </View>
+          </Pressable>
+        );
+      })}
+      <VoiceControl onCommand={onCommand} />
+      <View style={styles.quickRow}>
+        {(['up', 'down', 'go', 'stop', 'no'] as Command[]).map((c) => <QuickCommand key={c} command={c} onPress={() => onCommand(c)} />)}
+      </View>
+      <Text style={styles.hint}>
+        Move with UP/DOWN, start with GO, stop with STOP; NO returns.{lastCommand ? `  Last: ${commandLabels[lastCommand]}` : ''}
+      </Text>
     </AppShell>
   );
 }
 
-function ConfirmScreen({ route }: { route: { params?: { action?: string } } }) {
+// Confirmación de una acción sensible: yes la ejecuta; no la cancela y regresa.
+function ConfirmScreen({ route }: { route: { params?: { routineId?: RoutineId } } }) {
   const navigation = useNavigation<any>();
-  const action = route.params?.action ?? 'Welcome home';
+  const { startRoutine } = useDevices();
+  const routine = ROUTINES[route.params?.routineId ?? 'night'];
+  const [focus, setFocus] = useState<'yes' | 'no'>('yes');
+
+  const answer = (choice: 'yes' | 'no') => {
+    if (choice === 'yes') startRoutine(route.params?.routineId ?? 'night');
+    navigation.goBack();
+  };
+
+  const onCommand = (command: Command) => {
+    if (command === 'left') setFocus('yes');
+    if (command === 'right') setFocus('no');
+    if (command === 'yes' || command === 'no') answer(command);
+  };
+
   return (
-    <AppShell eyebrow="CONFIRMATION" title="Ready to run?">
-      <View style={styles.confirmCard}><Text style={styles.confirmMark}>✓</Text><Text style={styles.confirmTitle}>{action}</Text><Text style={styles.confirmDetail}>This routine will update your living room devices.</Text></View>
-      <VoiceControl onCommand={(command) => { if (command === 'go' || command === 'yes') navigation.navigate('Home'); if (command === 'stop' || command === 'no') navigation.goBack(); }} />
-      <View style={styles.quickRow}><QuickCommand command="go" /><QuickCommand command="stop" /></View>
-      <Text style={styles.hint}>Use GO to confirm the routine or STOP to cancel.</Text>
+    <AppShell eyebrow="CONFIRMATION" title="Confirm action">
+      <View style={styles.confirmCard}>
+        <Text style={styles.confirmTitle}>Turn off all devices?</Text>
+        <Text style={styles.confirmDetail}>{routine.name}: {routine.detail.toLowerCase()}. Say YES to accept or NO to cancel and return.</Text>
+      </View>
+      <View style={styles.actionRow}>
+        <ActionCard title="yes" detail="Execute the action" focused={focus === 'yes'} onPress={() => answer('yes')} />
+        <ActionCard title="no" detail="Cancel and go back" focused={focus === 'no'} onPress={() => answer('no')} />
+      </View>
+      <VoiceControl onCommand={onCommand} />
+      <View style={styles.quickRow}>
+        {(['yes', 'no'] as Command[]).map((c) => <QuickCommand key={c} command={c} onPress={() => onCommand(c)} />)}
+      </View>
+      <Text style={styles.hint}>Confirmation screens reduce ambiguity and make sensitive actions safer.</Text>
     </AppShell>
   );
-}
-
-function RoutineCard({ name, detail, onPress }: { name: string; detail: string; onPress: () => void }) {
-  return <Pressable style={styles.routineCard} onPress={onPress}><View><Text style={styles.cardTitle}>{name}</Text><Text style={styles.cardDetail}>{detail}</Text></View><Text style={styles.cardArrow}>→</Text></Pressable>;
 }
 
 // Con onPress, el botón simula el comando: sirve para probar la navegación sin el modelo
@@ -294,6 +377,7 @@ const styles = StyleSheet.create({
   homeCard: { width: '48.5%', minHeight: 132, backgroundColor: '#1a201e', padding: 16, borderRadius: 6, borderWidth: 2, borderColor: 'transparent' },
   badge: { alignSelf: 'flex-start', marginTop: 'auto', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12 },
   badgeOpen: { backgroundColor: '#65d9ff' },
+  routineBadge: { marginTop: 0, marginLeft: 12 },
   badgeTextOff: { color: '#c8cec8' },
   deviceText: { flexShrink: 1 },
   actionRow: { flexDirection: 'row', gap: 12, marginTop: 14 },
