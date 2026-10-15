@@ -125,8 +125,6 @@ Las 4 combinaciones son: Modelo A con datos crudos, Modelo A con datos aumentado
 
 Las cuatro pantallas y sus comandos:
 
-- [ ] 
-
 - Panel principal: up, down, left, right mueven el foco; yes abre la tarjeta.
 - Dispositivo: on y off controlan el aparato; yes confirma; no regresa.
 - Rutinas: up y down mueven; go inicia; stop detiene.
@@ -134,7 +132,7 @@ Las cuatro pantallas y sus comandos:
 
 - [ ] **Persona 3 (lidera):** capturar audio del micrófono en ventanas de 1 segundo, integrar ONNX Runtime Mobile (cargar el `.onnx` como recurso de la aplicación y leer la predicción) y configurar la versión de desarrollo compilada.
 
-- [ ] **Persona 1:** portar el espectrograma a TypeScript (transformada de Fourier, filtros mel y normalización) y probarlo hasta que coincida con los tensores de referencia de la Fase 1. Construir las pantallas Panel principal y Dispositivo.
+- [x] **Persona 1:** portar el espectrograma a TypeScript (transformada de Fourier, filtros mel y normalización) y probarlo hasta que coincida con los tensores de referencia de la Fase 1. Construir las pantallas Panel principal y Dispositivo.
 
 - [ ] **Persona 2:** construir las pantallas Rutinas y Confirmación, y la lógica que conecta cada predicción con una acción. Evitar disparos falsos: ignorar predicciones con poca confianza y no repetir el mismo comando dos veces seguidas por error.
 
